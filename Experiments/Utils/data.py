@@ -177,6 +177,46 @@ def BSyntheticLocalityComplex(N):
         samples.append(np.asarray(example_signal))
     return np.asarray(samples)
 
+def ReadTS(name):
+    data_path = os.path.join(path, f"Univariate_arff/{name}/{name}_TEST.txt")
+    
+    # 读取文件中的数据并存储为 NumPy 数组
+    test = np.loadtxt(data_path)
+
+    data_path = os.path.join(path, f"Univariate_arff/{name}/{name}_TRAIN.txt")
+    
+    train = np.loadtxt(data_path)
+
+    #print("数据形状:", ACSF1_test.shape)
+    #print("数据内容:\n", ACSF1_test)
+    
+    # # 获取第一列
+    # first_column = train[:, 0]
+    
+    # # 统计每个数字的频次
+    # unique, counts = np.unique(first_column, return_counts=True)
+    
+    # # 将结果组合为字典
+    # freq_dict = dict(zip(unique, counts))
+    
+    # print(freq_dict)
+    
+    # 第一列作为标签 y_train
+    y_train = train[:, 0]
+    
+    # 剩余部分作为特征 x_train
+    x_train = train[:, 1:]
+    
+    y_test= test[:, 0]
+    
+    x_test = test[:, 1:]
+    
+    # print("x_train:\n", x_train)
+    # print("y_train:\n", y_train)
+
+    return x_train, y_train, x_test, y_test
+
+
 def generateSyntheticPerturbReal(train_size):
 
     A = ASyntheticPerturb(train_size)
