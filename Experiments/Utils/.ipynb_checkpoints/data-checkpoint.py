@@ -178,6 +178,16 @@ def BSyntheticLocalityComplex(N):
     return np.asarray(samples)
 
 def ReadTS(name):
+    # 获取当前运行的 ipynb 文件所在目录
+    current_dir = os.path.dirname(os.path.abspath("__file__"))
+    
+    # 向上查找，直到找到指定的文件夹
+    target_folder = "LIMESegment"  # 你想作为起始路径的文件夹名
+    path = current_dir
+    
+    while os.path.basename(path) != target_folder:
+        path = os.path.dirname(path)  # 一层一层向上找
+    
     data_path = os.path.join(path, f"Univariate_arff/{name}/{name}_TEST.txt")
     
     # 读取文件中的数据并存储为 NumPy 数组
@@ -206,10 +216,12 @@ def ReadTS(name):
     
     # 剩余部分作为特征 x_train
     x_train = train[:, 1:]
+    x_train = x_train.reshape((x_train.shape[0], x_train.shape[1], 1))
     
     y_test= test[:, 0]
     
     x_test = test[:, 1:]
+    x_test = x_test.reshape((x_test.shape[0], x_test.shape[1], 1))
     
     # print("x_train:\n", x_train)
     # print("y_train:\n", y_train)

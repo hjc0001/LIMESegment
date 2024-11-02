@@ -45,7 +45,7 @@ def RBPIndividual(original_signal, index0, index1):
 
 def zeroPerturb(original_signal, index0, index1):
     new_signal = original_signal.copy()
-    new_signal[index0:index1] = np.zeros(100)
+    new_signal[index0:index1] = np.zeros(index1 - index0)
     return new_signal
 
 def noisePerturb(original_signal, index0, index1):
