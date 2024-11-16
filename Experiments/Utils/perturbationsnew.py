@@ -25,7 +25,7 @@ def multisamplebackgroundIdentification(global_signals):
     for i in range(0,len(weights)):
         dummymatrix[i,:] = dummymatrix[i,:] * weights[i]"""
     
-    background_frequency = Zxx * dummymatrix
+    background_frequency = Zxx * dummymatrix / global_signals.shape[0]
     _, xrec = signal.istft(background_frequency, 1)
     return xrec
 
@@ -130,12 +130,12 @@ def RBPIndividualNew2(global_signals, original_signal, index0, index1):
 
 def zeroPerturb(original_signal, index0, index1):
     new_signal = original_signal.copy()
-    new_signal[index0:index1] = np.zeros(100)
+    new_signal[index0:index1] = np.zeros(index1 - index0)
     return new_signal
 
 def noisePerturb(original_signal, index0, index1):
     new_signal = original_signal.copy()
-    new_signal[index0:index1] = np.random.randint(-100,100,100).reshape(100)
+    new_signal[index0:index1] = np.random.randint(np.min(original_signal),np.max(original_signal),index1 - index0).reshape(index1 - index0)
     return new_signal 
 
 
