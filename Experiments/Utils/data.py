@@ -7,11 +7,11 @@ from sklearn.utils import shuffle
 import sys
 sys.path.append('../')
 from Utils.constants import TRAIN_FILES, TEST_FILES
-from Utils.perturbationsnew import RBPIndividual, RBPIndividualNew1, RBPIndividualNew2, zeroPerturb, noisePerturb, blurPerturb
+from Utils.perturbationsnew import RBPIndividual, RBPIndividualNew1, RBPIndividualNew1fast, RBPIndividualNew2, zeroPerturb, noisePerturb, blurPerturb
 
 
 
-def perturb(perturbation_strategy, ts, index0, index1, global_ts = []):
+def perturb(perturbation_strategy, ts, index0, index1, global_ts = [],bg = []):
     if perturbation_strategy == 'RBP':
         return RBPIndividual(ts, index0, index1)
     if perturbation_strategy == 'zero':
@@ -21,7 +21,9 @@ def perturb(perturbation_strategy, ts, index0, index1, global_ts = []):
     if perturbation_strategy == 'blur':
         return blurPerturb(ts, index0, index1)
     if perturbation_strategy == 'RBP1':
-        return RBPIndividualNew1(global_ts, ts, index0, index1)    
+        return RBPIndividualNew1(global_ts, ts, index0, index1) 
+    if perturbation_strategy == 'RBP1fast':
+        return RBPIndividualNew1fast(bg, ts, index0, index1)  
     if perturbation_strategy == 'RBP2':
         return RBPIndividualNew2(global_ts, ts, index0, index1)    
 

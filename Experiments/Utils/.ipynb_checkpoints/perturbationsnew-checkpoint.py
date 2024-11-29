@@ -117,9 +117,38 @@ def RBPIndividual(original_signal, index0, index1):
 def RBPIndividualNew1(global_signals, original_signal, index0, index1):
     xrec = multisamplebackgroundIdentification(global_signals)
     raw_signal = original_signal.copy()
+    raw_slice = raw_signal[index0:index1]
+    xrec_slice = xrec[index0:index1]
+    raw_range = raw_slice.max() - raw_slice.min()
+    xrec_range = xrec_slice.max() - xrec_slice.min()
+
+    if raw_range > 0 and xrec_range > 0:
+        range_ratio = raw_range / xrec_range
+
+    if range_ratio > 10:
+        scale_factor = range_ratio / 10
+        xrec[index0:index1] *= scale_factor
+
     raw_signal[index0:index1] = xrec[index0:index1]
     return raw_signal
 
+def RBPIndividualNew1fast(background, original_signal, index0, index1):
+    xrec = background
+    raw_signal = original_signal.copy()
+    raw_slice = raw_signal[index0:index1]
+    xrec_slice = xrec[index0:index1]
+    raw_range = raw_slice.max() - raw_slice.min()
+    xrec_range = xrec_slice.max() - xrec_slice.min()
+
+    if raw_range > 0 and xrec_range > 0:
+        range_ratio = raw_range / xrec_range
+
+    if range_ratio > 10:
+        scale_factor = range_ratio / 10
+        xrec[index0:index1] *= scale_factor
+
+    raw_signal[index0:index1] = xrec[index0:index1]
+    return raw_signal
 
 def RBPIndividualNew2(global_signals, original_signal, index0, index1):
     xrec = candidatebackgroundIdentification(global_signals)

@@ -34,9 +34,13 @@ def make_CNN_model(input_shape, num_classes=2):
 
     gap = keras.layers.GlobalAveragePooling1D()(conv3)
 
-    output_layer = keras.layers.Dense(num_classes, activation="sigmoid")(gap)
 
-    return keras.models.Model(inputs=input_layer, outputs=output_layer)
+    output_layer = keras.layers.Dense(num_classes, activation="softmax", name="classification_output")(gap)
+    
+    return keras.Model(inputs=input_layer, outputs=output_layer, name="classification_model")
+
+
+
 
 def make_LSTMFCN_model(MAX_SEQUENCE_LENGTH, NB_CLASS=2, NUM_CELLS=8):
     ip = Input(shape=(MAX_SEQUENCE_LENGTH, 1))
