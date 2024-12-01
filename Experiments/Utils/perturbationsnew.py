@@ -164,7 +164,7 @@ def zeroPerturb(original_signal, index0, index1):
 
 def noisePerturb(original_signal, index0, index1):
     new_signal = original_signal.copy()
-    new_signal[index0:index1] = np.random.randint(np.min(original_signal),np.max(original_signal),index1 - index0).reshape(index1 - index0)
+    new_signal[index0:index1] = np.random.uniform(np.min(original_signal),np.max(original_signal),index1 - index0).reshape(index1 - index0)
     return new_signal 
 
 
