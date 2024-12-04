@@ -180,43 +180,42 @@ def BSyntheticLocalityComplex(N):
     return np.asarray(samples)
 
 def ReadTS(name):
-    # 获取当前运行的 ipynb 文件所在目录
+
     current_dir = os.path.dirname(os.path.abspath("__file__"))
     
-    # 向上查找，直到找到指定的文件夹
-    target_folder = "LIMESegment"  # 你想作为起始路径的文件夹名
+
+    target_folder = "LIMESegment"  
     path = current_dir
     
     while os.path.basename(path) != target_folder:
-        path = os.path.dirname(path)  # 一层一层向上找
+        path = os.path.dirname(path)  
     
     data_path = os.path.join(path, f"Univariate_arff/{name}/{name}_TEST.txt")
     
-    # 读取文件中的数据并存储为 NumPy 数组
+
     test = np.loadtxt(data_path)
 
     data_path = os.path.join(path, f"Univariate_arff/{name}/{name}_TRAIN.txt")
     
     train = np.loadtxt(data_path)
 
-    #print("数据形状:", ACSF1_test.shape)
-    #print("数据内容:\n", ACSF1_test)
+    #print(":", ACSF1_test.shape)
+    #print(":\n", ACSF1_test)
     
-    # # 获取第一列
+
     # first_column = train[:, 0]
-    
-    # # 统计每个数字的频次
+
     # unique, counts = np.unique(first_column, return_counts=True)
     
-    # # 将结果组合为字典
+
     # freq_dict = dict(zip(unique, counts))
     
     # print(freq_dict)
     
-    # 第一列作为标签 y_train
+
     y_train = train[:, 0]
     
-    # 剩余部分作为特征 x_train
+
     x_train = train[:, 1:]
     x_train = x_train.reshape((x_train.shape[0], x_train.shape[1], 1))
     
@@ -237,7 +236,7 @@ def generateSyntheticPerturbReal(train_size):
     B = ASyntheticPerturb(train_size)
     rbp_B = [perturb('RBP',example, 400, 500) for example in B]
     rbp1_B = [perturb('RBP1',example, 400, 500, B) for example in B]
-    rbp2_B = [perturb('RBP2',example, 400, 500, B) for example in B]
+    #rbp2_B = [perturb('RBP2',example, 400, 500, B) for example in B]
     zero_B = [perturb('zero',example, 400, 500) for example in B]
     noise_B = [perturb('noise',example, 400, 500) for example in B]
     blur_B = [perturb('blur',example, 400, 500) for example in B]
@@ -245,7 +244,7 @@ def generateSyntheticPerturbReal(train_size):
     x_train_original = np.concatenate((A,B),axis=0)
     x_train_rbp = np.concatenate((A,rbp_B),axis=0)
     x_train_rbp1 = np.concatenate((A,rbp1_B),axis=0)
-    x_train_rbp2 = np.concatenate((A,rbp2_B),axis=0)
+    #x_train_rbp2 = np.concatenate((A,rbp2_B),axis=0)
     x_train_zero = np.concatenate((A,zero_B),axis=0)
     x_train_noise = np.concatenate((A,noise_B),axis=0)
     x_train_blur = np.concatenate((A,blur_B),axis=0)
@@ -254,7 +253,7 @@ def generateSyntheticPerturbReal(train_size):
     x_train_original = x_train_original.reshape((x_train_original.shape[0], x_train_original.shape[1], 1))
     x_train_rbp = x_train_rbp.reshape((x_train_rbp.shape[0], x_train_rbp.shape[1], 1))
     x_train_rbp1 = x_train_rbp1.reshape((x_train_rbp1.shape[0], x_train_rbp1.shape[1], 1))
-    x_train_rbp2 = x_train_rbp2.reshape((x_train_rbp2.shape[0], x_train_rbp2.shape[1], 1))
+    #x_train_rbp2 = x_train_rbp2.reshape((x_train_rbp2.shape[0], x_train_rbp2.shape[1], 1))
     x_train_zero = x_train_zero.reshape((x_train_zero.shape[0], x_train_zero.shape[1], 1))
     x_train_noise = x_train_noise.reshape((x_train_noise.shape[0], x_train_noise.shape[1], 1))
     x_train_blur = x_train_blur.reshape((x_train_blur.shape[0], x_train_blur.shape[1], 1))
@@ -262,12 +261,12 @@ def generateSyntheticPerturbReal(train_size):
     x_train_original, y_train_original = shuffle(x_train_original, y_train.copy(), random_state=0)
     x_train_rbp, y_train_rbp = shuffle(x_train_rbp, y_train.copy(), random_state=0)
     x_train_rbp1, y_train_rbp1 = shuffle(x_train_rbp1, y_train.copy(), random_state=0)
-    x_train_rbp2, y_train_rbp2 = shuffle(x_train_rbp2, y_train.copy(), random_state=0)
+    #x_train_rbp2, y_train_rbp2 = shuffle(x_train_rbp2, y_train.copy(), random_state=0)
     x_train_zero, y_train_zero = shuffle(x_train_zero, y_train.copy(), random_state=0)
     x_train_noise, y_train_noise = shuffle(x_train_noise, y_train.copy(), random_state=0)
     x_train_blur, y_train_blur = shuffle(x_train_blur, y_train.copy(), random_state=0)
 
-    return [[x_train_original, y_train_original],[x_train_rbp, y_train_rbp],[x_train_rbp1, y_train_rbp1],[x_train_rbp2, y_train_rbp2],[x_train_zero, y_train_zero],[x_train_noise, y_train_noise],[x_train_blur, y_train_blur]]
+    return [[x_train_original, y_train_original],[x_train_rbp, y_train_rbp],[x_train_rbp1, y_train_rbp1],[x_train_zero, y_train_zero],[x_train_noise, y_train_noise],[x_train_blur, y_train_blur]]
 
 def generateSynthetic(test_type, train_size, test_size):
     if test_type == 'perturb':

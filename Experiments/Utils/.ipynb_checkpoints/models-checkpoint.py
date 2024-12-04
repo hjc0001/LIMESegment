@@ -16,8 +16,16 @@ from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau, LearningRateScheduler
 from keras.wrappers.scikit_learn import KerasClassifier
+import random
+import tensorflow as tf
+
 
 def make_CNN_model(input_shape, num_classes=2):
+    random_seed = 42 
+    random.seed(random_seed)
+    np.random.seed(random_seed)
+    tf.random.set_seed(random_seed)
+
     input_layer = keras.layers.Input(input_shape)
 
     conv1 = keras.layers.Conv1D(filters=64, kernel_size=3, padding="same")(input_layer)

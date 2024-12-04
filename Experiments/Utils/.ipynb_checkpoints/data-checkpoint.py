@@ -237,7 +237,7 @@ def generateSyntheticPerturbReal(train_size):
     B = ASyntheticPerturb(train_size)
     rbp_B = [perturb('RBP',example, 400, 500) for example in B]
     rbp1_B = [perturb('RBP1',example, 400, 500, B) for example in B]
-    rbp2_B = [perturb('RBP2',example, 400, 500, B) for example in B]
+    #rbp2_B = [perturb('RBP2',example, 400, 500, B) for example in B]
     zero_B = [perturb('zero',example, 400, 500) for example in B]
     noise_B = [perturb('noise',example, 400, 500) for example in B]
     blur_B = [perturb('blur',example, 400, 500) for example in B]
@@ -245,7 +245,7 @@ def generateSyntheticPerturbReal(train_size):
     x_train_original = np.concatenate((A,B),axis=0)
     x_train_rbp = np.concatenate((A,rbp_B),axis=0)
     x_train_rbp1 = np.concatenate((A,rbp1_B),axis=0)
-    x_train_rbp2 = np.concatenate((A,rbp2_B),axis=0)
+    #x_train_rbp2 = np.concatenate((A,rbp2_B),axis=0)
     x_train_zero = np.concatenate((A,zero_B),axis=0)
     x_train_noise = np.concatenate((A,noise_B),axis=0)
     x_train_blur = np.concatenate((A,blur_B),axis=0)
@@ -254,7 +254,7 @@ def generateSyntheticPerturbReal(train_size):
     x_train_original = x_train_original.reshape((x_train_original.shape[0], x_train_original.shape[1], 1))
     x_train_rbp = x_train_rbp.reshape((x_train_rbp.shape[0], x_train_rbp.shape[1], 1))
     x_train_rbp1 = x_train_rbp1.reshape((x_train_rbp1.shape[0], x_train_rbp1.shape[1], 1))
-    x_train_rbp2 = x_train_rbp2.reshape((x_train_rbp2.shape[0], x_train_rbp2.shape[1], 1))
+    #x_train_rbp2 = x_train_rbp2.reshape((x_train_rbp2.shape[0], x_train_rbp2.shape[1], 1))
     x_train_zero = x_train_zero.reshape((x_train_zero.shape[0], x_train_zero.shape[1], 1))
     x_train_noise = x_train_noise.reshape((x_train_noise.shape[0], x_train_noise.shape[1], 1))
     x_train_blur = x_train_blur.reshape((x_train_blur.shape[0], x_train_blur.shape[1], 1))
@@ -262,12 +262,12 @@ def generateSyntheticPerturbReal(train_size):
     x_train_original, y_train_original = shuffle(x_train_original, y_train.copy(), random_state=0)
     x_train_rbp, y_train_rbp = shuffle(x_train_rbp, y_train.copy(), random_state=0)
     x_train_rbp1, y_train_rbp1 = shuffle(x_train_rbp1, y_train.copy(), random_state=0)
-    x_train_rbp2, y_train_rbp2 = shuffle(x_train_rbp2, y_train.copy(), random_state=0)
+    #x_train_rbp2, y_train_rbp2 = shuffle(x_train_rbp2, y_train.copy(), random_state=0)
     x_train_zero, y_train_zero = shuffle(x_train_zero, y_train.copy(), random_state=0)
     x_train_noise, y_train_noise = shuffle(x_train_noise, y_train.copy(), random_state=0)
     x_train_blur, y_train_blur = shuffle(x_train_blur, y_train.copy(), random_state=0)
 
-    return [[x_train_original, y_train_original],[x_train_rbp, y_train_rbp],[x_train_rbp1, y_train_rbp1],[x_train_rbp2, y_train_rbp2],[x_train_zero, y_train_zero],[x_train_noise, y_train_noise],[x_train_blur, y_train_blur]]
+    return [[x_train_original, y_train_original],[x_train_rbp, y_train_rbp],[x_train_rbp1, y_train_rbp1],[x_train_zero, y_train_zero],[x_train_noise, y_train_noise],[x_train_blur, y_train_blur]]
 
 def generateSynthetic(test_type, train_size, test_size):
     if test_type == 'perturb':
